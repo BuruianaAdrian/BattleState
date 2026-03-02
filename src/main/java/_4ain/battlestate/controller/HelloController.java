@@ -1,4 +1,4 @@
-package _4ain.battlestate;
+package _4ain.battlestate.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
