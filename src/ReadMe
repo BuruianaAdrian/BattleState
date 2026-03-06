@@ -1,0 +1,21 @@
+In questo file scrivero l'idea base del gioco.
+
+Titolo:Battle State
+
+Genere:
+-Platform ,2D
+-Combattimento a turni
+
+Obbietivo: Eliminare i nemici o nemico presenti nel livello
+
+Gameplay:
+Il giocatore e i nemici agiscono a turni, uno alla volta.
+A ogni turno il giocatore può scegliere tra diversi tipi di attacchi.
+Ogni attacco può avere caratteristiche diverse.
+Il livello è strutturato con una piattaforma 2D.
+Il turno termina dopo aver eseguito un’azione; poi tocca al nemico.
+
+
+
+
+

@@ -20,7 +20,7 @@ public abstract class Personaggio {
     }
 
     public void riceviDanno(int danno){
-        hp =- danno;
+        hp -= danno;
         if(hp < 0){
             hp = 0;
         }
@@ -34,7 +34,7 @@ public abstract class Personaggio {
         return hp;
     }
 
-    public ArrayList<Attacco> getAttacchi() {
+    public ArrayList<Attacco> getAttacchi(){
         return attacchi;
     }
 

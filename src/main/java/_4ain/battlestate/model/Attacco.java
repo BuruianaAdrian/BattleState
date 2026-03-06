@@ -22,4 +22,5 @@ public class Attacco {
     public String getNome() {
         return nome;
     }
+
 }
