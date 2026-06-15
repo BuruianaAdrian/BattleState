@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class Nemico extends Personaggio{
 
-    public Nemico(String nome, int hp, ArrayList<Attacco> attacchi, int difesa) {
-        super(nome, hp, attacchi, difesa);
+    public Nemico(String nome, int hp, ArrayList<Attacco> attacchi, boolean inDifesa, int energia) {
+        super(nome, hp, attacchi, inDifesa, energia);
     }
     public static ArrayList<Attacco> creaAttacchi() {
         ArrayList<Attacco> lista = new ArrayList<>();

@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 public class Giocatore extends Personaggio{
 
-    public Giocatore(String nome, int hp, ArrayList<Attacco> attacchi, int difesa) {
-        super(nome, hp, attacchi, difesa);
+
+    public Giocatore(String nome, int hp, ArrayList<Attacco> attacchi, boolean inDifesa, int energia) {
+        super(nome, hp, attacchi, inDifesa, energia);
     }
+
     public static ArrayList<Attacco> creaAttacchi() {
         ArrayList<Attacco> lista = new ArrayList<>();
         lista.add(new Attacco("Spada", 30, TipoAttaco.FISICO));
