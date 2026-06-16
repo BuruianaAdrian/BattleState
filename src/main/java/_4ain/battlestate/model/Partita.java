@@ -4,52 +4,50 @@ import java.util.ArrayList;
 
 public class Partita {
     private StatoGioco stato;
-    private ArrayList<String> opzioni;
+    private ArrayList<String> messaggi;
 
     public Partita(){
         stato = StatoGioco.TurnoGiocatore;
-        opzioni = new ArrayList<>();
+        messaggi = new ArrayList<>();
         setStato(StatoGioco.TurnoGiocatore);
     }
     Nemico nemico = new Nemico("Miko", 100, Nemico.creaAttacchi(),false,100);
     Giocatore giocatore = new Giocatore("Ady", 100, Giocatore.creaAttacchi(), false, 100);
     public void setStato(StatoGioco stato){
-        opzioni.clear();
+        this.stato = stato;
+        messaggi.clear();
         switch(stato){
                 //stato0
             case stato.TurnoGiocatore:
-                opzioni.add("Scegli attacco - turno giocatore");
+                messaggi.add("Scegli attacco - turno giocatore");
                 int numero = 1;
                 for(Attacco a : giocatore.getAttacchi()){
-                    opzioni.add(numero++ + ". " + a.getNome());
+                    messaggi.add(numero++ + ". " + a.getNome());
                 }
             break;
                 //stato1
             case stato.TurnoNemico:
-                opzioni.add("Scegli attacco - turno nemico");
-                int numero2 = 1;
-                for(Attacco a : nemico.getAttacchi()){
-                    opzioni.add(numero2++ + ". " + a.getNome());
-                }
-
+                messaggi.add("Scegli attacco - turno nemico");
                 break;
             //stato2
             case stato.Vittoria:
-                opzioni.add(giocatore.getNome() + "ha vinto");
+                messaggi.add("------Vittoria------\n");
+                messaggi.add(giocatore.getNome() + " ha vinto");
                 break;
             //stato3
             case stato.Sconfitta:
-                opzioni.add(nemico.getNome() + "ha vinto");
+                messaggi.add("------Sconfitta------\n");
+                messaggi.add(nemico.getNome() + " ha vinto");
             break;
         }
     }
 
-    public ArrayList<String> getOpzioni() {
-        return opzioni;
+    public ArrayList<String> getMessaggi() {
+        return messaggi;
     }
 
     public String getDisplay() {
-        return "------Battle State------\n" +
+        return "\n------Battle State------\n" +
                 giocatore.getNome() +
                 " HP:" + giocatore.getHp() +
                 " EN:" + giocatore.getEnergia() +
@@ -62,10 +60,94 @@ public class Partita {
     public void segliOpzione(int indice){
         if(indice <= giocatore.getAttacchi().size()){
             Attacco a = giocatore.getAttacchi().get(indice - 1);
-            nemico.riceviDanno(a.calcolaDanno());
+            messaggi.add(giocatore.getNome() + " attacca.\n" );
+            if(nemico.isInDifesa()){
+                seDifesa(a);
+                nemico.setInDifesa(false);
+            }else{
+                nemico.riceviDanno(a.calcolaDanno());
+                messaggi.add(nemico.getNome() + " perde " + a.calcolaDanno() + " di vita.\n");
+            }
+
         }else{
             giocatore.setInDifesa(true);
+            messaggi.add(giocatore.getNome() + " si difende.\n");
+            setStato(StatoGioco.TurnoNemico);
         }
-        setStato(StatoGioco.TurnoNemico);
+
+        controllaVita();
+
+        if(!partitaFinita()){
+            setStato(StatoGioco.TurnoNemico);
+        }
+    }
+
+    public void controllaVita(){
+        if(!nemico.èVivo()){
+            setStato(StatoGioco.Vittoria);
+        } else if (!giocatore.èVivo()) {
+            setStato(StatoGioco.Sconfitta);
+        }
+
+
+    }
+    //una funzione che scegle in modo random un attacco.
+    public void scegliOpzioneBot(){
+        int numero = (int) (Math.random() * (nemico.getAttacchi().size() + 1)) + 1;
+
+        if(numero > nemico.getAttacchi().size()) {
+            nemico.setInDifesa(true);
+            messaggi.add(nemico.getNome() + " si difende.\n");
+            setStato(StatoGioco.TurnoGiocatore);
+        }else{
+            Attacco a = nemico.getAttacchi().get(numero - 1);
+            messaggi.add(nemico.getNome() + " attacca.\n" );
+            if(giocatore.isInDifesa()){
+                seDifesa(a);
+                giocatore.setInDifesa(false);
+            }else{
+                giocatore.riceviDanno(a.calcolaDanno());
+                messaggi.add(giocatore.getNome() + " perde " + a.calcolaDanno() + " di vita.\n");
+            }
+
+        }
+        controllaVita();
+
+        if(!partitaFinita()){
+           setStato(StatoGioco.TurnoGiocatore);
+        }
+    }
+    private boolean partitaFinita(){
+        return stato == StatoGioco.Vittoria || stato == StatoGioco.Sconfitta;
+    }
+    //una funzione che calcola il danno se uno dei due e in difesa
+    public void seDifesa(Attacco a){
+        int dannoFinale;
+        StatoGioco stato1= stato;
+        switch (stato1){
+            case stato.TurnoGiocatore:
+                dannoFinale = a.calcolaDanno()/2;
+                nemico.riceviDanno(dannoFinale);
+                messaggi.add(nemico.getNome() + " perde " + dannoFinale + " di vita.\n");
+                break;
+            case TurnoNemico:
+                dannoFinale = a.calcolaDanno()/2;
+                giocatore.riceviDanno(dannoFinale);
+                messaggi.add(giocatore.getNome() + " perde " + dannoFinale + " di vita.\n");
+                break;
+        }
+
+    }
+
+    public StatoGioco getStato() {
+        return stato;
+    }
+
+    public Nemico getNemico() {
+        return nemico;
+    }
+
+    public Giocatore getGiocatore() {
+        return giocatore;
     }
 }

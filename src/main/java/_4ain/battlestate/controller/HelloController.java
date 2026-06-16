@@ -1,11 +1,6 @@
 package _4ain.battlestate.controller;
 
-import _4ain.battlestate.model.Attacco;
-import _4ain.battlestate.model.Nemico;
-import _4ain.battlestate.model.Partita;
-import _4ain.battlestate.model.StatoGioco;
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import _4ain.battlestate.model.*;
 
 import java.util.Scanner;
 
@@ -21,13 +16,19 @@ public class HelloController {
 
         while(inGioco){
             System.out.println(partita.getDisplay());
-            for(String a : partita.getOpzioni()){
+            for(String a : partita.getMessaggi()){
                 System.out.println(a);
             }
             Scanner key = new Scanner(System.in);
             int scelta = key.nextInt();
             partita.segliOpzione(scelta);
+            if(partita.getStato() == StatoGioco.TurnoNemico){
+                partita.scegliOpzioneBot();
+            }
 
+            if(partita.getStato() == StatoGioco.Vittoria || partita.getStato() == StatoGioco.Sconfitta){
+                inGioco = false;
+            }
         }
     }
 }
