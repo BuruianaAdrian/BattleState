@@ -13,17 +13,27 @@ public class HelloController {
 
     public void game(){
         boolean inGioco = true;
+        Scanner key = new Scanner(System.in);
 
         while(inGioco){
-            System.out.println(partita.getDisplay());
-            for(String a : partita.getMessaggi()){
+            System.out.println(partita.aggiornaDisplay());
+            for(String a : partita.getMenu()){
                 System.out.println(a);
             }
-            Scanner key = new Scanner(System.in);
             int scelta = key.nextInt();
-            partita.segliOpzione(scelta);
+            partita.scegliOpzione(scelta);
+            for(String a : partita.getLogs()){
+                System.out.println(a);
+            }
+            partita.clearLogs();
+            //System.out.println(partita.getStato());
             if(partita.getStato() == StatoGioco.TurnoNemico){
                 partita.scegliOpzioneBot();
+                for(String a : partita.getLogs()){
+                    System.out.println(a);
+                }
+                partita.clearLogs();
+                //System.out.println(partita.getStato());
             }
 
             if(partita.getStato() == StatoGioco.Vittoria || partita.getStato() == StatoGioco.Sconfitta){
