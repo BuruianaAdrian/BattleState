@@ -9,8 +9,9 @@ public class Nemico extends Personaggio{
     }
     public static ArrayList<Attacco> creaAttacchi() {
         ArrayList<Attacco> lista = new ArrayList<>();
-        lista.add(new Attacco("Fuoco", 50, TipoAttaco.MAGICO));
-        lista.add(new Attacco("Veleno", 50, TipoAttaco.MAGICO));
+        lista.add(new Attacco("Fuoco", 20, 6,TipoAttaco.MAGICO));
+        lista.add(new Attacco("Veleno", 30,9 ,TipoAttaco.MAGICO));
+        lista.add(new Attacco("BO", 40,10,TipoAttaco.FISICO));
         return lista;
     }
 

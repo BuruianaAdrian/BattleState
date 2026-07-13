@@ -1,6 +1,7 @@
 package _4ain.battlestate.model;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Partita {
     private StatoGioco stato;
@@ -14,8 +15,8 @@ public class Partita {
         setStato(StatoGioco.TurnoGiocatore);
         setMenu();
     }
-    Nemico nemico = new Nemico("Miko", 100, Nemico.creaAttacchi(),false,100);
-    Giocatore giocatore = new Giocatore("Ady", 100, Giocatore.creaAttacchi(), false, 100);
+    Nemico nemico = new Nemico("Danu", 100, Nemico.creaAttacchi(),false,100);
+    Giocatore giocatore = new Giocatore("Marian", 100, Giocatore.creaAttacchi(), false, 100);
 
     public void setMenu(){
         menu.clear();
@@ -24,8 +25,9 @@ public class Partita {
                 menu.add("Scegli attacco - turno giocatore");
                 int numero = 1;
                 for(Attacco a : giocatore.getAttacchi()){
-                    menu.add(numero++ + ". " + a.getNome());
+                    menu.add(numero++ + ". " + a.getNome() + " " + a.getCostoEnergia() + " costo energia.");
                 }
+                menu.add(numero + ". "  + "Difesa");
                 break;
             case stato.TurnoNemico:
                 menu.add("Turno nemico");
@@ -59,27 +61,22 @@ public class Partita {
                 " HP:" + nemico.getHp() +
                 " EN:" + nemico.getEnergia();
     }
-//    public String getDisplay() {
-//        return "\n------Battle State------\n" +
-//                giocatore.getNome() +
-//                " HP:" + giocatore.getHp() +
-//                " EN:" + giocatore.getEnergia() +
-//                "\n" +
-//                nemico.getNome() +
-//                " HP:" + nemico.getHp() +
-//                " EN:" + nemico.getEnergia();
-//    }
-
     public void scegliOpzione(int indice){
         if(indice <= giocatore.getAttacchi().size()){
             Attacco a = giocatore.getAttacchi().get(indice - 1);
+            if(giocatore.getEnergia() < a.getCostoEnergia()){
+                logs.add(giocatore.getNome() + " non ha abastanza energia. Deve scegliere un altro attacco");
+                return;
+            }
             logs.add(giocatore.getNome() + " attacca.\n" );
             if(nemico.isInDifesa()){
                 seDifesa(a);
                 nemico.setInDifesa(false);
+                giocatore.recuperaEnergia(20);
             }else{
                 nemico.riceviDanno(a.calcolaDanno());
                 logs.add(nemico.getNome() + " perde " + a.calcolaDanno() + " di vita.\n");
+                giocatore.riduzioneEnergia(a.getCostoEnergia());
             }
 
         }else{
@@ -98,13 +95,15 @@ public class Partita {
         if(!nemico.èVivo()){
             setStato(StatoGioco.Vittoria);
             setMenu();
+            menu.add("\n------Game Over------\n");
         } else if (!giocatore.èVivo()) {
             setStato(StatoGioco.Sconfitta);
             setMenu();
+            menu.add("\n------Game Over------\n");
         }
-
-
     }
+
+
     //una funzione che scegle in modo random un attacco.
     public void scegliOpzioneBot(){
         int numero = (int) (Math.random() * (nemico.getAttacchi().size() + 1)) + 1;
@@ -114,13 +113,20 @@ public class Partita {
             logs.add(nemico.getNome() + " si difende.\n");
         }else{
             Attacco a = nemico.getAttacchi().get(numero - 1);
+            if(nemico.getEnergia() < a.getCostoEnergia()){
+                logs.add(nemico.getNome() + " non ha abastanza energia. Deve scegliere un altro attacco");
+                return;
+            }
+
             logs.add(nemico.getNome() + " attacca.\n" );
             if(giocatore.isInDifesa()){
                 seDifesa(a);
                 giocatore.setInDifesa(false);
+                nemico.recuperaEnergia(20);
             }else{
                 giocatore.riceviDanno(a.calcolaDanno());
                 logs.add(giocatore.getNome() + " perde " + a.calcolaDanno() + " di vita.\n");
+                nemico.riduzioneEnergia(a.getCostoEnergia());
             }
 
         }

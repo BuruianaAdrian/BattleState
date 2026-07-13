@@ -11,14 +11,10 @@ public class Giocatore extends Personaggio{
 
     public static ArrayList<Attacco> creaAttacchi() {
         ArrayList<Attacco> lista = new ArrayList<>();
-        lista.add(new Attacco("Spada", 30, TipoAttaco.FISICO));
-        lista.add(new Attacco("Pistola", 40, TipoAttaco.FISICO));
+        lista.add(new Attacco("Pugno", 10, 0,TipoAttaco.FISICO));
+        lista.add(new Attacco("Calcio", 30, 80,TipoAttaco.FISICO));
+        lista.add(new Attacco("Spada", 50, 30,TipoAttaco.FISICO));
         return lista;
-    }
-
-    public ArrayList<Attacco> getAttacchi(){
-        ArrayList<Attacco> attacchi = creaAttacchi();
-        return attacchi;
     }
 
 

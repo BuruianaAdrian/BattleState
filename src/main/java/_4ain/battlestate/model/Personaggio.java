@@ -21,6 +21,23 @@ public abstract class Personaggio {
         return hp > 0;
     }
 
+    public boolean isEnergia(){
+        return energia > 0;
+    }
+
+    public void riduzioneEnergia(int nr){
+        energia -= nr;
+        if(energia < 0){
+            energia = 0;
+        }
+    }
+
+    public void recuperaEnergia(int quantita){
+        energia += quantita;
+        if(energia > 100){
+            energia = 100;
+        }
+    }
     public void riceviDanno(int danno){
         hp -= danno;
         if(hp < 0){

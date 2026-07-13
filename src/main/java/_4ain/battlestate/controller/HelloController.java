@@ -26,7 +26,6 @@ public class HelloController {
                 System.out.println(a);
             }
             partita.clearLogs();
-            //System.out.println(partita.getStato());
             if(partita.getStato() == StatoGioco.TurnoNemico){
                 partita.scegliOpzioneBot();
                 for(String a : partita.getLogs()){
@@ -36,9 +35,14 @@ public class HelloController {
                 //System.out.println(partita.getStato());
             }
 
-            if(partita.getStato() == StatoGioco.Vittoria || partita.getStato() == StatoGioco.Sconfitta){
+            if(partita.getStato() == StatoGioco.Vittoria || partita.getStato() == StatoGioco.Sconfitta ){
+                System.out.println(partita.aggiornaDisplay());
+                for(String a : partita.getMenu()){
+                    System.out.println(a);
+                }
                 inGioco = false;
             }
+
         }
     }
 }
