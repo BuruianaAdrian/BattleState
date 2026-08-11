@@ -10,7 +10,6 @@ public class HelloController {
     public void initialize() {
         game();
     }
-
     public void game(){
         boolean inGioco = true;
         Scanner key = new Scanner(System.in);
