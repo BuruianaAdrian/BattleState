@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
@@ -10,20 +11,56 @@
             <Image url="@../../images/backgrounds/SnowyMountain.png" />
          </image>
       </ImageView>
-      <AnchorPane prefHeight="200.0" prefWidth="1280.0">
+      <AnchorPane prefHeight="200.0" prefWidth="1280.0" stylesheets="@battle.css">
          <children>
-            <ImageView fx:id="heroImage" fitHeight="150.0" fitWidth="200.0" layoutX="40.0" layoutY="541.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="enemyImage" fitHeight="169.0" fitWidth="280.0" layoutX="438.0" layoutY="529.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="heroImage" fitHeight="150.0" fitWidth="200.0" layoutX="367.0" layoutY="349.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="enemyImage" fitHeight="169.0" fitWidth="280.0" layoutX="754.0" layoutY="330.0" pickOnBounds="true" preserveRatio="true" />
+            <VBox fx:id="heroPanel" alignment="CENTER_LEFT" layoutX="14.0" layoutY="25.0" prefHeight="115.0" prefWidth="300.0" spacing="8.0" styleClass="stats-panel">
+               <children>
+                  <Label fx:id="heroName" alignment="TOP_CENTER" styleClass="character-name" text="HERO" />
+                  <HBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="280.0" spacing="10.0">
+                     <children>
+                        <Label text="HP" />
+                        <ProgressBar fx:id="heroHpBar" prefHeight="16.0" prefWidth="180.0" progress="0.8" styleClass="hp-bar" />
+                        <Label fx:id="heroHpLabel" text="80" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="55.0" prefHeight="51.0" prefWidth="280.0" spacing="10.0">
+                     <children>
+                        <Label text="EN" />
+                        <ProgressBar fx:id="heroEnergyBar" prefHeight="16.0" prefWidth="180.0" progress="0.35" styleClass="energy-bar" />
+                        <Label fx:id="heroEnergyLabel" text="35" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox fx:id="heroPanel1" alignment="CENTER_LEFT" layoutX="950.0" layoutY="24.0" prefHeight="115.0" prefWidth="300.0" spacing="8.0" styleClass="stats-panel">
+               <children>
+                  <Label fx:id="heroName1" alignment="TOP_CENTER" styleClass="character-name" text="SKELETON" />
+                  <HBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="280.0" spacing="10.0">
+                     <children>
+                        <Label text="HP" />
+                        <ProgressBar fx:id="enemyHpBar" prefHeight="16.0" prefWidth="180.0" progress="0.8" styleClass="hp-bar" />
+                        <Label fx:id="enemyHpLabel" text="80" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="55.0" prefHeight="51.0" prefWidth="280.0" spacing="10.0">
+                     <children>
+                        <Label text="EN" />
+                        <ProgressBar fx:id="enemyEnergyBar" prefHeight="16.0" prefWidth="180.0" progress="0.35" styleClass="energy-bar" />
+                        <Label fx:id="enemyEnergyLabel" text="35" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <HBox alignment="CENTER" layoutX="14.0" layoutY="567.0" prefHeight="100.0" prefWidth="600.0" spacing="12.0">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="65.0" prefWidth="130.0" styleClass="attack-button" text="SLASH&#10;10 EN" />
+                  <Button mnemonicParsing="false" prefHeight="65.0" prefWidth="130.0" styleClass="attack-button" text="FIRE&#10;20 EN" />
+                  <Button mnemonicParsing="false" prefHeight="65.0" prefWidth="130.0" styleClass="attack-button" text="DEFEND&#10;+15 EN" />
+                  <Button mnemonicParsing="false" prefHeight="65.0" prefWidth="130.0" styleClass="attack-button" text="SPECIAL&#10;+40 EN" />
+               </children>
+            </HBox>
          </children></AnchorPane>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0">
-         <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-         </children>
-      </AnchorPane>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0">
-         <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="95.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" />
-         </children>
-      </AnchorPane>
    </children>
 </StackPane>
