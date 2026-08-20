@@ -15,6 +15,10 @@ public class SpriteAnimation {
 
     private int currentFrame = 0;
 
+    // Dice se l'animazione deve ricominciare dall'inizio
+    private boolean looping = false;
+
+
     public SpriteAnimation(ImageView imageView, String[] framePaths, double fps) {
 
         this.imageView = imageView;
@@ -39,28 +43,83 @@ public class SpriteAnimation {
                         event -> nextFrame()
                 )
         );
-
-        timeline.setCycleCount(Animation.INDEFINITE);
     }
+
 
     private void nextFrame() {
 
         currentFrame++;
 
+        // Se siamo arrivati oltre l'ultimo frame
         if (currentFrame >= frames.length) {
-            currentFrame = 0;
+
+            if (looping) {
+
+                // IDLE → ricomincia
+                currentFrame = 0;
+
+            } else {
+
+                // SLASH / FIRE / DEFEND ecc.
+                // Rimane sull'ultimo frame
+                currentFrame = frames.length - 1;
+            }
         }
 
         imageView.setImage(frames[currentFrame]);
     }
 
-    public void play() {
-        timeline.play();
+
+    // IDLE → continua all'infinito
+    public void playLoop() {
+
+        timeline.stop();
+
+        looping = true;
+        currentFrame = 0;
+
+        imageView.setImage(frames[0]);
+
+        timeline.setOnFinished(null);
+        timeline.setCycleCount(Animation.INDEFINITE);
+
+        timeline.playFromStart();
     }
+
+
+    // SLASH / FIRE / DEFEND / SPECIAL → una sola volta
+    public void playOnce(Runnable onFinished) {
+
+        timeline.stop();
+
+        looping = false;
+        currentFrame = 0;
+
+        imageView.setImage(frames[0]);
+
+        /*
+         * frames.length e NON frames.length - 1.
+         *
+         * In questo modo anche l'ultimo frame rimane
+         * visibile per la durata corretta.
+         */
+        timeline.setCycleCount(frames.length);
+
+        timeline.setOnFinished(event -> {
+
+            if (onFinished != null) {
+                onFinished.run();
+            }
+        });
+
+        timeline.playFromStart();
+    }
+
 
     public void stop() {
         timeline.stop();
     }
+
 
     public void pause() {
         timeline.pause();

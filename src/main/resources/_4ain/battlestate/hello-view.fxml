@@ -13,8 +13,23 @@
       </ImageView>
       <AnchorPane prefHeight="200.0" prefWidth="1280.0" stylesheets="@battle.css">
          <children>
-            <ImageView fx:id="heroImage" fitHeight="150.0" fitWidth="200.0" layoutX="367.0" layoutY="349.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="enemyImage" fitHeight="169.0" fitWidth="280.0" layoutX="754.0" layoutY="330.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="specialProjectile" fitHeight="50.0" fitWidth="80.0" layoutX="300.0" layoutY="425.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../../images/ice_dagger.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="fireProjectile" fitHeight="50.0" fitWidth="80.0" layoutX="295.0" layoutY="420.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../../images/fire.png" />
+               </image></ImageView>
+            <ImageView fx:id="heroImage" fitHeight="150.0" fitWidth="200.0" layoutX="247.0" layoutY="339.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../hero/chibi_assassin/animations/IDLE/IDLE1.png" />
+               </image></ImageView>
+            <ImageView fx:id="enemyImage" fitHeight="169.0" fitWidth="280.0" layoutX="754.0" layoutY="330.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../enemy/skeleton/animation/IDLE/Animation42.png" />
+               </image></ImageView>
             <VBox fx:id="heroPanel" alignment="CENTER_LEFT" layoutX="14.0" layoutY="25.0" prefHeight="115.0" prefWidth="300.0" spacing="8.0" styleClass="stats-panel">
                <children>
                   <Label fx:id="heroName" alignment="TOP_CENTER" styleClass="character-name" text="HERO" />
@@ -55,10 +70,10 @@
             </VBox>
             <HBox alignment="CENTER" layoutX="14.0" layoutY="567.0" prefHeight="100.0" prefWidth="600.0" spacing="12.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="65.0" prefWidth="130.0" styleClass="attack-button" text="SLASH&#10;10 EN" />
-                  <Button mnemonicParsing="false" prefHeight="65.0" prefWidth="130.0" styleClass="attack-button" text="FIRE&#10;20 EN" />
-                  <Button mnemonicParsing="false" prefHeight="65.0" prefWidth="130.0" styleClass="attack-button" text="DEFEND&#10;+15 EN" />
-                  <Button mnemonicParsing="false" prefHeight="65.0" prefWidth="130.0" styleClass="attack-button" text="SPECIAL&#10;+40 EN" />
+                  <Button mnemonicParsing="false" onAction="#onSlash" prefHeight="65.0" prefWidth="130.0" styleClass="attack-button" text="SLASH&#10;10 EN" />
+                  <Button mnemonicParsing="false" onAction="#onFire" prefHeight="65.0" prefWidth="130.0" styleClass="attack-button" text="FIRE&#10;20 EN" />
+                  <Button mnemonicParsing="false" onAction="#onDefend" prefHeight="65.0" prefWidth="130.0" styleClass="attack-button" text="DEFEND&#10;+15 EN" />
+                  <Button mnemonicParsing="false" onAction="#onSpecial" prefHeight="65.0" prefWidth="130.0" styleClass="attack-button" text="SPECIAL&#10;+40 EN" />
                </children>
             </HBox>
          </children></AnchorPane>

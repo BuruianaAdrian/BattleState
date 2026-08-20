@@ -14,7 +14,7 @@ public class EnemyView {
     }
 
     public void playIdle() {
-        idleAnimation.play();
+        idleAnimation.playLoop();
     }
 
     public ImageView getImageView() {
