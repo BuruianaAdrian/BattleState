@@ -4,7 +4,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="721.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="_4ain.battlestate.controller.HelloController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="721.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="_4ain.battlestate.controller.Controller">
    <children>
       <ImageView fitHeight="721.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -13,6 +13,7 @@
       </ImageView>
       <AnchorPane prefHeight="200.0" prefWidth="1280.0" stylesheets="@battle.css">
          <children>
+            <TextArea fx:id="combatLog" editable="false" layoutX="737.0" layoutY="567.0" prefHeight="100.0" prefWidth="371.0" styleClass="combat-log" wrapText="true" />
             <ImageView fx:id="specialProjectile" fitHeight="50.0" fitWidth="80.0" layoutX="300.0" layoutY="425.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@../../images/ice_dagger.png" />
@@ -68,14 +69,26 @@
                   </HBox>
                </children>
             </VBox>
-            <HBox alignment="CENTER" layoutX="14.0" layoutY="567.0" prefHeight="100.0" prefWidth="600.0" spacing="12.0">
+            <HBox fx:id="actionBox" alignment="CENTER" layoutX="14.0" layoutY="567.0" prefHeight="100.0" prefWidth="600.0" spacing="12.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onSlash" prefHeight="65.0" prefWidth="130.0" styleClass="attack-button" text="SLASH&#10;10 EN" />
-                  <Button mnemonicParsing="false" onAction="#onFire" prefHeight="65.0" prefWidth="130.0" styleClass="attack-button" text="FIRE&#10;20 EN" />
+                  <Button mnemonicParsing="false" onAction="#onSlash" prefHeight="65.0" prefWidth="130.0" styleClass="attack-button" text="SLASH&#10;-10 EN" />
+                  <Button mnemonicParsing="false" onAction="#onFire" prefHeight="65.0" prefWidth="130.0" styleClass="attack-button" text="FIRE&#10;-20 EN" />
                   <Button mnemonicParsing="false" onAction="#onDefend" prefHeight="65.0" prefWidth="130.0" styleClass="attack-button" text="DEFEND&#10;+15 EN" />
-                  <Button mnemonicParsing="false" onAction="#onSpecial" prefHeight="65.0" prefWidth="130.0" styleClass="attack-button" text="SPECIAL&#10;+40 EN" />
+                  <Button mnemonicParsing="false" onAction="#onSpecial" prefHeight="65.0" prefWidth="130.0" styleClass="attack-button" text="SPECIAL&#10;-40 EN" />
                </children>
             </HBox>
+            <StackPane fx:id="endGamePane" prefHeight="721.0" prefWidth="1280.0" styleClass="end-game-pane" visible="false">
+               <children>
+                  <VBox alignment="CENTER" spacing="20.0" styleClass="end-game-box">
+                     <children>
+                        <Label fx:id="endGameTitle" styleClass="end-game-title" text="Label" />
+                        <Label fx:id="endGameText" styleClass="end-game-text" text="Label" />
+                        <Button mnemonicParsing="false" onAction="#onRetry" styleClass="end-game-button" text="RETRY" />
+                        <Button mnemonicParsing="false" onAction="#onExit" styleClass="end-game-button" text="EXIT" />
+                     </children>
+                  </VBox>
+               </children>
+            </StackPane>
          </children></AnchorPane>
    </children>
 </StackPane>

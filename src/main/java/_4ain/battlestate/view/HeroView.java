@@ -13,6 +13,7 @@ public class HeroView {
     private SpriteAnimation fireAnimation;
     private SpriteAnimation defendAnimation;
     private SpriteAnimation specialAnimation;
+    private SpriteAnimation deathAnimation;
 
     public HeroView(
             ImageView imageView,
@@ -20,7 +21,8 @@ public class HeroView {
             String[] slashFrames,
             String[] fireFrames,
             String[] defendFrames,
-            String[] specialFrames) {
+            String[] specialFrames,
+            String[] deathFrames) {
 
         this.imageView = imageView;
 
@@ -38,6 +40,9 @@ public class HeroView {
 
         specialAnimation =
                 new SpriteAnimation(imageView,specialFrames,8);
+
+        deathAnimation =
+                new SpriteAnimation(imageView, deathFrames, 8);
     }
 
     public void playIdle() {
@@ -77,6 +82,15 @@ public class HeroView {
 
         specialAnimation.playOnce(() -> {
             playIdle();
+        });
+    }
+
+    public void playDeath() {
+
+        idleAnimation.stop();
+
+        deathAnimation.playOnce(() -> {
+            //
         });
     }
 

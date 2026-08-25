@@ -15,8 +15,8 @@ public class Partita {
         setStato(StatoGioco.TurnoGiocatore);
         setMenu();
     }
-    Nemico nemico = new Nemico("Danu", 100, Nemico.creaAttacchi(),false,100);
-    Giocatore giocatore = new Giocatore("Marian", 100, Giocatore.creaAttacchi(), false, 100);
+    Nemico nemico = new Nemico("Skeleton", 100, Nemico.creaAttacchi(),false,100);
+    Giocatore giocatore = new Giocatore("Chibi Assassin", 100, Giocatore.creaAttacchi(), false, 100);
 
     public void setMenu(){
         menu.clear();
@@ -69,18 +69,24 @@ public class Partita {
                 return;
             }
             logs.add(giocatore.getNome() + " attacca.\n" );
-            if(nemico.isInDifesa()){
+            if (nemico.isInDifesa()) {
                 seDifesa(a);
                 nemico.setInDifesa(false);
-                giocatore.recuperaEnergia(20);
-            }else{
+            } else {
                 nemico.riceviDanno(a.calcolaDanno());
-                logs.add(nemico.getNome() + " perde " + a.calcolaDanno() + " di vita.\n");
-                giocatore.riduzioneEnergia(a.getCostoEnergia());
+                logs.add(
+                        nemico.getNome() +
+                                " perde " +
+                                a.calcolaDanno() +
+                                " di vita.\n"
+                );
             }
 
+            // Il costo viene pagato SEMPRE
+            giocatore.riduzioneEnergia(a.getCostoEnergia());
         }else{
             giocatore.setInDifesa(true);
+            giocatore.recuperaEnergia(15);
             logs.add(giocatore.getNome() + " si difende.\n");
         }
 
@@ -105,38 +111,73 @@ public class Partita {
 
 
     //una funzione che scegle in modo random un attacco.
-    public void scegliOpzioneBot(){
+    public int scegliOpzioneBot() {
+
         int numero = (int) (Math.random() * (nemico.getAttacchi().size() + 1)) + 1;
 
-        if(numero > nemico.getAttacchi().size()) {
-            nemico.setInDifesa(true);
-            logs.add(nemico.getNome() + " si difende.\n");
-        }else{
-            Attacco a = nemico.getAttacchi().get(numero - 1);
-            if(nemico.getEnergia() < a.getCostoEnergia()){
-                logs.add(nemico.getNome() + " non ha abastanza energia. Deve scegliere un altro attacco");
-                return;
-            }
+        // DIFESA
+        if (numero > nemico.getAttacchi().size()) {
 
-            logs.add(nemico.getNome() + " attacca.\n" );
-            if(giocatore.isInDifesa()){
-                seDifesa(a);
-                giocatore.setInDifesa(false);
-                nemico.recuperaEnergia(20);
-            }else{
-                giocatore.riceviDanno(a.calcolaDanno());
-                logs.add(giocatore.getNome() + " perde " + a.calcolaDanno() + " di vita.\n");
+            nemico.setInDifesa(true);
+
+            nemico.recuperaEnergia(15);
+
+            logs.add(nemico.getNome() + " si difende.\n");
+
+        } else {
+
+            Attacco a = nemico.getAttacchi().get(numero - 1);
+
+            // Energia insufficiente
+            if (nemico.getEnergia() < a.getCostoEnergia()) {
+
+                logs.add(
+                        nemico.getNome() +
+                                " non ha abbastanza energia. Si difende.\n"
+                );
+
+                // Se non può attaccare, trasformiamo l'azione in Defend
+                numero = nemico.getAttacchi().size() + 1;
+
+                nemico.setInDifesa(true);
+                nemico.recuperaEnergia(15);
+
+            } else {
+
+                logs.add(nemico.getNome() + " attacca.\n");
+
+                if (giocatore.isInDifesa()) {
+
+                    seDifesa(a);
+                    giocatore.setInDifesa(false);
+
+                } else {
+
+                    giocatore.riceviDanno(a.calcolaDanno());
+
+                    logs.add(
+                            giocatore.getNome() +
+                                    " perde " +
+                                    a.calcolaDanno() +
+                                    " di vita.\n"
+                    );
+                }
+
+                // Il nemico paga SEMPRE il costo dell'attacco
                 nemico.riduzioneEnergia(a.getCostoEnergia());
             }
-
         }
+
         controllaVita();
 
-        if(!partitaFinita()){
-           setStato(StatoGioco.TurnoGiocatore);
-           setMenu();
+        if (!partitaFinita()) {
+            setStato(StatoGioco.TurnoGiocatore);
+            setMenu();
         }
+
+        return numero;
     }
+
     private boolean partitaFinita(){
         return stato == StatoGioco.Vittoria || stato == StatoGioco.Sconfitta;
     }
