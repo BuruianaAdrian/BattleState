@@ -87,7 +87,7 @@ public class SpriteAnimation {
     }
 
 
-    // SLASH / FIRE / DEFEND / SPECIAL → una sola volta
+    // SLASH / FIRE / DEFEND / SPECIAL ,una sola volta
     public void playOnce(Runnable onFinished) {
 
         timeline.stop();

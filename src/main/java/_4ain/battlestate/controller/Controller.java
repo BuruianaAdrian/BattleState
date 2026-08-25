@@ -381,7 +381,7 @@ public class Controller {
                 return;
             }
 
-            // Skeleton sopravvive
+            // se skeleton sopravvive
             enemyView.playHurt();
 
             // Parte il suo turno
@@ -421,7 +421,7 @@ public class Controller {
                 // Death Skeleton
                 enemyView.playDeath();
 
-                // Dopo la death → Victory
+                // Dopo la death --- Victory
                 PauseTransition pausaVittoria =
                         new PauseTransition(Duration.millis(1200));
 
